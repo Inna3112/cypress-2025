@@ -1,0 +1,12 @@
+{
+  "name": "cypress-2025",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "cypress open"
+  },
+  "author": "Inna Fomichova",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^15.7.1"
+  }
+}
