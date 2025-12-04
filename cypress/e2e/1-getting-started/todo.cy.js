@@ -20,7 +20,10 @@ describe('example to-do app', () => {
     cy.visit('https://example.cypress.io/todo')
   })
 
-  it('displays two todo items by default', () => {
+  // якщо треба виконати лаше 1 тест або скіпнути його
+  // it.only('displays two todo items by default', () => {
+  // it.skip('displays two todo items by default', () => {
+  it.only('displays two todo items by default', () => {
     // We use the `cy.get()` command to get all elements that match the selector.
     // Then, we use `should` to assert that there are two matched items,
     // which are the two default items.
@@ -79,6 +82,8 @@ describe('example to-do app', () => {
       .should('have.class', 'completed')
   })
 
+  // якщо треба виконати тільки це
+  // context.only('with a checked task', () => {
   context('with a checked task', () => {
     beforeEach(() => {
       // We'll take the command we used above to check off an element
