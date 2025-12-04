@@ -1,0 +1,52 @@
+/// <reference types="cypress" />
+
+describe('Test Suite 1', () => {
+  beforeEach('Open test application', () => {
+    cy.visit('/');
+    cy.contains('Forms').click();
+    cy.contains('Form Layouts').click();
+  })
+
+  it('Hello World 1', () => {
+    //by Tag
+    cy.get('input')
+
+    //by Id
+    cy.get('#inputEmail1')
+
+    //by Class
+    cy.get('.input-full-width')
+
+    //by Attribute
+    cy.get('[fullwidth]')
+
+    //by Attribute with value
+    cy.get('[placeholder="Email"]')
+
+    //by entire class value
+    cy.get('[class="input-full-width size-medium status-basic shape-rectangle nb-transition"]')
+
+    //how to combine several attributes
+    cy.get('[placeholder="Email"][fullwidth]')
+    cy.get('input[placeholder="Email"]')
+
+    //find by data-cy attribute
+    cy.get('[data-cy="inputEmail1"]')
+  });
+
+  it('Cypress Locator Methods', () => {
+    //Theory
+    //get() - to find elements on the page globally
+    //find() - to find only child elements
+
+    //contains() - to find web elements by text (!!!find only first match!!!)
+    //this method is case sensitive
+
+    cy.contains('Sign In', {matchCase: false});
+    cy.contains('[status="warning"]', 'Sign in');
+    cy.contains('nb-card', 'Horizontal form').find('button')
+    cy.contains('nb-card', 'Horizontal form').contains('Sign in')
+    cy.contains('nb-card', 'Horizontal form').get('button')
+  })
+});
+
