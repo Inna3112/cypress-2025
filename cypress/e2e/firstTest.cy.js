@@ -49,7 +49,7 @@ describe('Test Suite 1', () => {
     cy.contains('nb-card', 'Horizontal form').get('button')
   })
 
-  it.only('Child Elements', () => {
+  it('Child Elements', () => {
 
     cy.contains('nb-card', 'Using the Grid').find('.row').find('button')
 
@@ -58,6 +58,15 @@ describe('Test Suite 1', () => {
     cy.get('nb-card nb-radio-group').contains('Option 1')// спосіб знайти один і той же елемент
 
     cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]') // ">" означає що елемент є прямим нащадком
+  })
+
+  it.only('Parent Elements', () => {
+
+    cy.get('#inputEmail1').parents('form').find('button')
+
+    cy.contains('Using the Grid').parent().find('button')
+
+    cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button')
   })
 });
 
