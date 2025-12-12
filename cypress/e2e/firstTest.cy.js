@@ -60,13 +60,26 @@ describe('Test Suite 1', () => {
     cy.get('nb-card > nb-card-body [placeholder="Jane Doe"]') // ">" означає що елемент є прямим нащадком
   })
 
-  it.only('Parent Elements', () => {
+  it('Parent Elements', () => {
 
     cy.get('#inputEmail1').parents('form').find('button')
 
     cy.contains('Using the Grid').parent().find('button')
 
     cy.get('#inputEmail1').parentsUntil('nb-card-body').find('button')
+  })
+
+  it.only('Cypress Chains', () => {
+    cy.get('#inputEmail1')
+      .parents('form')
+      .find('button')
+      .click()
+
+    cy.get('#inputEmail1')
+      .parents('form')
+      .find('nb-radio')
+      .first()
+      .should('have.text', 'Option 1')
   })
 });
 
