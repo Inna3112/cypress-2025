@@ -109,7 +109,7 @@ describe('Test Suite 1', () => {
 
   })
 
-  it.only('Extracting Values', () => {
+  it('Extracting Values', () => {
     // 1. using a JQuery method
     cy.get('[for="exampleInputEmail1"]').then( label => {
       const emailLabel = label.text()
@@ -134,6 +134,24 @@ describe('Test Suite 1', () => {
     cy.get('#exampleInputEmail1').invoke('prop', 'value').then( value => {
       console.log(value)
     })
+  })
+
+  it.only('Assertions', () => {
+    //Cypress має 2 типи Assertions - "should" та "expect"
+    //Assertion у Cypress — це перевірка, яка підтверджує, що очікувана умова виконана.
+    // Вони бувають implicit та explicit, і Cypress автоматично повторює операції до виконання assertion, роблячи тести стабільнішими.
+
+    cy.get('[for="exampleInputEmail1"]').should('have.text', 'Email address')
+
+    cy.get('[for="exampleInputEmail1"]').then( label => {
+      expect(label).to.have.text('Email address')
+    })
+
+    cy.get('[for="exampleInputEmail1"]').invoke('text').then( emailLabel => {
+      expect(emailLabel).to.equal('Email address')
+      cy.wrap(emailLabel).should('equal', 'Email address')
+    })
+
   })
 });
 
