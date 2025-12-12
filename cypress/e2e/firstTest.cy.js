@@ -136,7 +136,7 @@ describe('Test Suite 1', () => {
     })
   })
 
-  it.only('Assertions', () => {
+  it('Assertions', () => {
     //Cypress має 2 типи Assertions - "should" та "expect"
     //Assertion у Cypress — це перевірка, яка підтверджує, що очікувана умова виконана.
     // Вони бувають implicit та explicit, і Cypress автоматично повторює операції до виконання assertion, роблячи тести стабільнішими.
@@ -152,6 +152,15 @@ describe('Test Suite 1', () => {
       cy.wrap(emailLabel).should('equal', 'Email address')
     })
 
+  })
+
+  it.only('Timeouts', () => {
+    cy.contains('Modal & Overlays').click()
+    cy.contains('Dialog').click()
+
+    cy.contains('Open with delay 10 seconds').click() //якщо треба чекати більше часу ніж стандартний таймаут 4 секунди то треба змінити defaultCommandTimeout у cypress.config.js
+    cy.get('nb-dialog-container nb-card-header', {timeout: 11000}) // або додати таймаут тут без зміни глобального таймауту
+      .should('have.text', 'Friendly reminder')
   })
 });
 

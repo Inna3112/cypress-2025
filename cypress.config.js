@@ -9,4 +9,5 @@ module.exports = defineConfig({
   },
   viewportWidth: 1280,
   viewportHeight: 720,
+  // defaultCommandTimeout: 11000, // Змінює таймаут для всіх команд Cypress
 });
