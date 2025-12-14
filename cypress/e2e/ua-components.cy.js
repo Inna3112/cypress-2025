@@ -4,7 +4,7 @@ beforeEach('Open application', () => {
   cy.visit('/')
 })
 
-it.only('input fields', () => {
+it('input fields', () => {
   cy.contains('Forms').click()
   cy.contains('Form Layouts').click()
 
@@ -20,4 +20,20 @@ it.only('input fields', () => {
 
   // cy.get('#input-email').type('test@bondaracademy.com')
   // cy.get('#input-password').type('Welcome{enter}') // це еквівалентно натисканню кнопки Enter після введення тексту
+})
+
+it.only('radio buttons', () => {
+  cy.contains('Forms').click()
+  cy.contains('Form Layouts').click()
+
+  cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then( allRadioButtons => {
+    //{force:true} - використовується коли елемент прихований або перекритий іншим елементом
+    cy.wrap(allRadioButtons).eq(0).check({force:true}).should('be.checked')
+    cy.wrap(allRadioButtons).eq(1).check({force:true})
+    cy.wrap(allRadioButtons).eq(0).should('not.be.checked')
+    cy.wrap(allRadioButtons).eq(2).should('be.disabled')
+  })
+
+  cy.contains('nb-card', 'Using the Grid').contains('label', 'Option 1').find('input').check({force:true})
+
 })
