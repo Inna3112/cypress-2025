@@ -22,7 +22,7 @@ it('input fields', () => {
   // cy.get('#input-password').type('Welcome{enter}') // це еквівалентно натисканню кнопки Enter після введення тексту
 })
 
-it.only('radio buttons', () => {
+it('radio buttons', () => {
   cy.contains('Forms').click()
   cy.contains('Form Layouts').click()
 
@@ -35,5 +35,15 @@ it.only('radio buttons', () => {
   })
 
   cy.contains('nb-card', 'Using the Grid').contains('label', 'Option 1').find('input').check({force:true})
+})
 
+it.only('checkboxes', () => {
+  cy.contains('Modal & Overlays').click()
+  cy.contains('Toastr').click()
+
+  //.check() - змінює стейт чекбокса на "checked"
+  //.uncheck() - змінює стейт чекбокса на "unchecked"
+  cy.get('[type="checkbox"]').check({force: true})
+  // cy.get('[type="checkbox"]').click({force: true, multiple: true})
+  cy.get('[type="checkbox"]').should('be.checked')
 })
