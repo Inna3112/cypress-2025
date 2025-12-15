@@ -37,7 +37,7 @@ it('radio buttons', () => {
   cy.contains('nb-card', 'Using the Grid').contains('label', 'Option 1').find('input').check({force:true})
 })
 
-it.only('checkboxes', () => {
+it('checkboxes', () => {
   cy.contains('Modal & Overlays').click()
   cy.contains('Toastr').click()
 
@@ -46,4 +46,29 @@ it.only('checkboxes', () => {
   cy.get('[type="checkbox"]').check({force: true})
   // cy.get('[type="checkbox"]').click({force: true, multiple: true})
   cy.get('[type="checkbox"]').should('be.checked')
+})
+
+it.only('lists and dropdowns', () => {
+  cy.contains('Modal & Overlays').click()
+  cy.contains('Toastr').click()
+
+  //______testing native dropdown_______
+  //👉 Cypress знайде <div>, в якому є текст Toast type: cy.contains('div', 'Toast type:'), далі .find('select') знайде дочірній елемент.
+  //.select('info') далі вибираємо значення 'info' зі списку
+  cy.contains('div', 'Toast type:').find('select').select('info').should('have.value', 'info')
+
+  //______testing custom dropdown_______
+  cy.contains('div', 'Position:').find('nb-select').click()
+  cy.get('.option-list').contains('bottom-right').click()
+  cy.contains('div', 'Position:').find('nb-select').should('have.text', 'bottom-right')
+
+  //Вибір всіх опцій по черзі
+  cy.contains('div', 'Position:').find('nb-select').then(dropdown => {
+    cy.wrap(dropdown).click()
+    cy.get('.option-list nb-option').each((option, index, list) => {
+      cy.wrap(option).click()
+      if(index < list.length-1)
+        cy.wrap(dropdown).click()
+    })
+  })
 })
