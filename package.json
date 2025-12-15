@@ -8,6 +8,7 @@
   "author": "Inna Fomichova",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^15.7.1"
+    "cypress": "^15.7.1",
+    "cypress-iframe": "^1.0.1"
   }
 }

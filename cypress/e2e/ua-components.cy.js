@@ -205,10 +205,32 @@ it('sliders', () => {
   cy.get('[class="value temperature h1"]').should('contain.text', '18')
 })
 
-it.only('drag and drop', () => {
+it('drag and drop', () => {
   cy.contains('Extra Components').click()
   cy.contains('Drag & Drop').click()
 
   cy.get('#todo-list div').first().trigger('dragstart')
   cy.get('#drop-list').trigger('drop')
+})
+
+it.only('iframes', () => {
+  cy.contains('Modal & Overlays').click()
+  cy.contains('Dialog').click()
+
+  //Cypress не дуже дружить з iframe, тому для роботи з ними використовують додаткові плагіни, наприклад cypress-iframe.
+  //Методи cypress-iframe:
+  //cy.frameLoaded() - перевіряє, що iframe завантажений і готовий до взаємодії.
+  //cy.iframe() - дозволяє отримати доступ до вмісту iframe і виконувати дії всередині нього.
+  //cy.enter() - дозволяє увійти в контекст iframe для виконання серії дій всередині нього.
+
+  cy.frameLoaded('[data-cy="esc-close-iframe"]')
+  cy.iframe('[data-cy="esc-close-iframe"]').contains('Open Dialog with esc close').click()
+  cy.contains('Dismiss Dialog').click()
+
+  cy.enter('[data-cy="esc-close-iframe"]').then( getBody => {
+    getBody().contains('Open Dialog with esc close').click()
+    cy.contains('Dismiss Dialog').click()
+    getBody().contains('Open Dialog without esc close').click()
+    cy.contains('OK').click()
+  })
 })
