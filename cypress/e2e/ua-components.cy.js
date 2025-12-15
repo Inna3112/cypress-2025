@@ -48,7 +48,7 @@ it('checkboxes', () => {
   cy.get('[type="checkbox"]').should('be.checked')
 })
 
-it.only('lists and dropdowns', () => {
+it('lists and dropdowns', () => {
   cy.contains('Modal & Overlays').click()
   cy.contains('Toastr').click()
 
@@ -71,4 +71,14 @@ it.only('lists and dropdowns', () => {
         cy.wrap(dropdown).click()
     })
   })
+})
+
+it.only('tooltips', () => {
+  //tooltip - це невелике спливаюче вікно з підказкою, яке з'являється, коли користувач наводить курсор миші на певний елемент інтерфейсу.
+  cy.contains('Modal & Overlays').click()
+  cy.contains('Tooltip').click()
+
+  //Тут ми використовуємо trigger('mouseenter') щоб симулювати наведення миші на кнопку 'Top'
+  cy.contains('button', 'Top').trigger('mouseenter')
+  cy.get('nb-tooltip').should('have.text', 'This is a tooltip')
 })
