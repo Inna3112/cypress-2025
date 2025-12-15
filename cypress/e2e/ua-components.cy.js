@@ -105,7 +105,7 @@ it('dialog boxes', () => {
   cy.get('@dialogBox').should('be.calledWith', 'Are you sure you want to delete?')
 })
 
-it.only('web tables', () => {
+it('web tables', () => {
   cy.contains('Tables & Data').click()
   cy.contains('Smart Table').click()
 
@@ -149,7 +149,7 @@ it.only('web tables', () => {
   })
 })
 
-it.only('datepickers', () => {
+it('datepickers', () => {
   cy.contains('Forms').click()
   cy.contains('Datepicker').click()
 
@@ -192,4 +192,16 @@ it.only('datepickers', () => {
     const dateToAssert = selectDateFromCurrentDay(20)
     cy.wrap(input).should('have.value', dateToAssert)
   })
+})
+
+it.only('sliders', () => {
+  //sliders - це елементи інтерфейсу, які дозволяють користувачам вибирати значення з певного діапазону, перетягуючи повзунок вздовж шкали.
+  //cy.get('[tabtitle="Temperature"] circle') - таке вкладення селекторів використовується для знаходження елемента SVG (графічного елемента) всередині вкладки з назвою "Temperature".
+  cy.get('[tabtitle="Temperature"] circle')
+    //викликаємо метод attr щоб змінити атрибути cx і cy елемента circle на відповідні вказані нами значення (value) '38.66' та '57.75'.
+    .invoke('attr', 'cx', '38.66')
+    .invoke('attr', 'cy', '57.75')
+    .click()
+  cy.get('[class="value temperature h1"]').should('contain.text', '18')
+
 })
