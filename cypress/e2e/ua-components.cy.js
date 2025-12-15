@@ -194,7 +194,7 @@ it('datepickers', () => {
   })
 })
 
-it.only('sliders', () => {
+it('sliders', () => {
   //sliders - це елементи інтерфейсу, які дозволяють користувачам вибирати значення з певного діапазону, перетягуючи повзунок вздовж шкали.
   //cy.get('[tabtitle="Temperature"] circle') - таке вкладення селекторів використовується для знаходження елемента SVG (графічного елемента) всередині вкладки з назвою "Temperature".
   cy.get('[tabtitle="Temperature"] circle')
@@ -203,5 +203,12 @@ it.only('sliders', () => {
     .invoke('attr', 'cy', '57.75')
     .click()
   cy.get('[class="value temperature h1"]').should('contain.text', '18')
+})
 
+it.only('drag and drop', () => {
+  cy.contains('Extra Components').click()
+  cy.contains('Drag & Drop').click()
+
+  cy.get('#todo-list div').first().trigger('dragstart')
+  cy.get('#drop-list').trigger('drop')
 })
