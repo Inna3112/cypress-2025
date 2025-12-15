@@ -148,3 +148,48 @@ it.only('web tables', () => {
     })
   })
 })
+
+it.only('datepickers', () => {
+  cy.contains('Forms').click()
+  cy.contains('Datepicker').click()
+
+  // cy.get('[placeholder="Form Picker"]').then(input => {
+  //   cy.wrap(input).click()
+  //   cy.get('.day-cell').not('.bounding-month').contains('12').click()
+  //   cy.wrap(input).should('have.value', 'Dec 12, 2023')
+  // })
+
+  function selectDateFromCurrentDay(day) {
+    //new Date() - створює новий об'єкт дати з поточним днем
+    let date = new Date()
+    //додаємо до поточного дня потрібну кількість днів - мутуємо об'єкт date
+    date.setDate(date.getDate() + day)
+    let futureDay = date.getDate()
+    //отримуємо назву місяця у довгому форматі (January, February, etc.)
+    let futureMonthLong = date.toLocaleDateString('en-US', { month: 'long' })
+    let futureMonthShort = date.toLocaleDateString('en-US', { month: 'short' })
+    let futureYear = date.getFullYear()
+    let dateToAssert = `${futureMonthShort} ${futureDay}, ${futureYear}`
+
+    //invoke('text') - викликає метод (мабуть цей метод jQuery) text() на знайденому елементі, щоб отримати його текстовий вміст
+    cy.get('nb-calendar-view-mode').invoke('text').then(calendarMonthAndYear => {
+      if (!calendarMonthAndYear.includes(futureMonthLong) || !calendarMonthAndYear.includes(futureYear)) {
+        cy.get('[data-name="chevron-right"]').click()
+        selectDateFromCurrentDay(day)
+      } else {
+        //обираємо день у календарі, виключаючи дні з інших місяців (bounding-month)
+        cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
+      }
+    })
+
+    return dateToAssert
+  }
+
+  cy.get('[placeholder="Form Picker"]').then(input => {
+    //cy.wrap – обгортає елемент у контекст Cypress, дозволяючи використовувати команди Cypress на цьому елементі
+    //тому що input це jQuery елемент
+    cy.wrap(input).click()
+    const dateToAssert = selectDateFromCurrentDay(20)
+    cy.wrap(input).should('have.value', dateToAssert)
+  })
+})
