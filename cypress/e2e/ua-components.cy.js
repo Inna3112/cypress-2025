@@ -82,3 +82,24 @@ it.only('tooltips', () => {
   cy.contains('button', 'Top').trigger('mouseenter')
   cy.get('nb-tooltip').should('have.text', 'This is a tooltip')
 })
+
+it.only('dialog boxes', () => {
+  cy.contains('Tables & Data').click()
+  cy.contains('Smart Table').click()
+
+  //1.
+  cy.get('.nb-trash').first().click()
+  //method 'on' дозволяє слухати різні події браузера.
+  cy.on('window:confirm', confirm => {
+    expect(confirm).to.equal('Are you sure you want to delete?')
+  })
+
+  //2.
+  cy.window().then( win => {
+    //ми замінили поведінку вікна підтвердження, щоб воно завжди повертало false, що означає відміну дії видалення.
+    //ми знайшли у обєкті вікна метод confirm і створили його підробку за допомогою cy.stub().
+    cy.stub(win, 'confirm').as('dialogBox').returns(false)
+  })
+  cy.get('.nb-trash').first().click()
+  cy.get('@dialogBox').should('be.calledWith', 'Are you sure you want to delete?')
+})
